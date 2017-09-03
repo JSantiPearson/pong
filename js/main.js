@@ -16,7 +16,7 @@ var makeBar = function(player1Y, player2Y){
 }
 
 var player1Y = 100;
-// var player2Y = 100;
+var player2Y = 100;
 
 var W = 87;
 var S = 83;
@@ -24,26 +24,64 @@ var UP = 38;
 var DOWN = 40;
 
 // two has convenience methods to create shapes.
-var circle = two.makeCircle(72, 100, 50);
 
-window.onkeydown = function(e) {
-   var key = e.keyCode ? e.keyCode : e.which;
-
-   if (key == W) {
-      player1Y = player1Y-10;
-       makeBar(player1Y);
-   }else if (key == S) {
-     player1Y = player1Y+10;
-       makeBar(player1Y);
-   }
-      two.update();
-}
-
-// The object returned has many stylable properties:
-circle.fill = '#FF8000';
-circle.stroke = 'orangered'; // Accepts all valid css color
-circle.linewidth = 5;
 
 // Don't forget to tell two to render everything
 // to the screen
+
+
+var makeCircle = function(){
+  var circle = two.makeCircle(72, 100, 50);
+
+  // The object returned has many stylable properties:
+  circle.fill = '#FF8000';
+  circle.stroke = 'orangered'; // Accepts all valid css color
+  circle.linewidth = 5;
+}
+
+
+makeCircle();
+two.update();
+
+
+
+
+var keyState = {};
+window.addEventListener('keydown',function(e){
+    keyState[e.keyCode || e.which] = true;
+},true);
+window.addEventListener('keyup',function(e){
+    keyState[e.keyCode || e.which] = false;
+},true);
+
+// x = 100;
+
+var gameLoop =  function() {
+    if (keyState[W]){
+      player1Y = player1Y - 1;
+    }
+    if (keyState[S]){
+      player1Y = player1Y + 1;
+
+    }
+
+    // if(keyState[UP]){
+    //
+    // }
+    // if(keyState[DOWN]){
+    //
+    // }
+
+
+    makeBar(player1Y, player2Y);
+    // makeBall()
+
+
+    // redraw/reposition your object here
+    // also redraw/animate any objects not controlled by the user
+    two.update();
+
+    setTimeout(gameLoop, 5);
+}
+gameLoop();
 two.update();
