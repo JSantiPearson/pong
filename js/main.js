@@ -70,10 +70,10 @@ var gameLoop =  function() {
 
     }
 
-    if(keyState[UP]){
+    if(keyState[UP] && player2Y > 55){
       player2Y = player2Y - SPEED;
     }
-    if(keyState[DOWN]){
+    if(keyState[DOWN] && player2Y+PADDLE_HEIGHT < CANVAS_HEIGHT+45){
       player2Y = player2Y + SPEED;
     }
 
